@@ -85,35 +85,6 @@ edge --debug 9229
 edge --flavor 'Microsoft Edge Canary' --profile dev@example.com --debug
 ```
 
-## Helper Functions
-  
-### `edge-list-flavors`
-
-Lists all installed Microsoft Edge flavors:
-
-```fish
-$ edge-list-flavors
-Microsoft Edge
-Microsoft Edge Canary
-Microsoft Edge Dev
-```
-
-### `edge-list-profiles`
-
-Lists all Edge profiles as JSON:
-
-```fish
-$ edge-list-profiles
-[
-  {
-    "profileDirectory": "Default",
-    "email": "user@example.com",
-    "edgeFlavor": "Microsoft Edge"
-  },
-  ...
-]
-```
-
 ## Tab Completions
 
 The plugin provides intelligent tab completions:

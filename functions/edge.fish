@@ -7,11 +7,19 @@ function edge -d 'Opens Microsoft Edge with optional arguments'
     set -l edge_app
 
     if set -q _flag_flavor
-        # Find flavor matching the flag
+        # Find flavor matching the flag: try exact match first, then partial
         for v in $flavors
-            if string match -qi "*$_flag_flavor*" $v
+            if string match -qi "$_flag_flavor" $v
                 set edge_app $v
                 break
+            end
+        end
+        if not set -q edge_app[1]
+            for v in $flavors
+                if string match -qi "*$_flag_flavor*" $v
+                    set edge_app $v
+                    break
+                end
             end
         end
         if not set -q edge_app[1]

@@ -58,15 +58,26 @@ function edge -d 'Opens Microsoft Edge with optional arguments'
         set profile_dir Default
     end
 
-    set -a cmd --profile-directory="$profile_dir"
-
     # Add remote debugging if requested
     if set -q _flag_debug
+        # Chromium 136+ ignores remote debugging for the default user data directory.
+        # Use an isolated, disposable profile in the system temporary directory.
+        set -l debug_data_dir (mktemp -d -t devedge.fish)
+        or begin
+            echo "Error: Could not create a temporary debug profile directory" >&2
+            return 1
+        end
+
+        set -a cmd --user-data-dir="$debug_data_dir"
+        set -a cmd --profile-directory=Default
+
         if test -n "$_flag_debug"
             set -a cmd --remote-debugging-port="$_flag_debug"
         else
             set -a cmd --remote-debugging-port=9222
         end
+    else
+        set -a cmd --profile-directory="$profile_dir"
     end
 
     # Add any remaining arguments

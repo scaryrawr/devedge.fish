@@ -76,8 +76,14 @@ edge --flavor 'Microsoft Edge Canary' --profile work@company.com
 edge --debug
 
 # Enable remote debugging on a custom port
-edge --debug 9229
+edge --debug=9229
 ```
+
+Edge 136 and newer require remote debugging to use a non-default user data
+directory. Each debug launch therefore uses a fresh, isolated profile in the
+macOS temporary directory. This protects the normal browser profile, but the
+temporary profile does not retain sign-ins, cookies, extensions, or settings
+between launches.
 
 ### Combining Options
 
